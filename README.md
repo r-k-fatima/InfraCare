@@ -1,20 +1,16 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# InfraCare 🌐
 
-# Run and deploy your AI Studio app
+**InfraCare** is a civic-tech platform designed to make public infrastructure issue reporting simpler, faster, and more transparent. Citizens can report issues such as potholes, broken streetlights, garbage, water leaks, and damaged public property with relevant details, images, and location information.
 
-This contains everything you need to run your app locally.
+The platform helps organize and track reported issues, prioritize them based on severity, and provide municipal teams with a structured way to manage and resolve complaints.
 
-View your app in AI Studio: https://ai.studio/apps/30bedfb8-b884-4673-a558-d4ecaafb8d9e
+### Key Features
 
-## Run Locally
+* 📍 Location-based issue reporting
+* 📸 Image and evidence submission
+* 🚦 Severity-based prioritization
+* 🔄 Report status tracking
+* 👷 Municipal issue management
+* 📊 Dashboard for monitoring reports
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+InfraCare is being developed as a **2-person project** with a focus on clean design, modular development, and future scalability.
