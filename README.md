@@ -1,4 +1,4 @@
-# InfraCare 🌐
+# InfraCare Website 🌐
 
 **InfraCare** is a civic-tech platform designed to make public infrastructure issue reporting simpler, faster, and more transparent. Citizens can report issues such as potholes, broken streetlights, garbage, water leaks, and damaged public property with relevant details, images, and location information.
 
