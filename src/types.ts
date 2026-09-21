@@ -1,4 +1,4 @@
-export type Priority = 'high' | 'medium' | 'low';
+export type Priority = 'very_high'|'high' | 'moderate' | 'low';
 export type Status = 'pending' | 'in-progress' | 'resolved';
 
 export interface Issue {
