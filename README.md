@@ -14,3 +14,5 @@ The platform helps organize and track reported issues, prioritize them based on 
 * 📊 Dashboard for monitoring reports
 
 InfraCare is being developed as a **2-person project** with a focus on clean design, modular development, and future scalability.
+
+**Infracare was developed by Rukhsaar Fatima and Prachi Shrivastava**
