@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  /* Warm/Purple-tinted neutral palette to replace cold slates */
+  --color-slate-50: #fafafa;
+  --color-slate-100: #f5f5f7;
+  --color-slate-200: #ededf1;
+  --color-slate-300: #d8d8e3;
+  --color-slate-400: #b1b1c3;
+  --color-slate-600: #6b6b81;
+  --color-slate-700: #4a4a5e;
+  --color-slate-800: #2d2d3d;
+  --color-slate-900: #1a1a24;
+  
+  --color-indigo-50: #f5f3ff;
+  --color-indigo-600: #915DFF;
+  --color-indigo-700: #7B42FF;
+  --color-emerald-500: #10b981;
+  --color-amber-500: #f59e0b;
+  --color-red-500: #ef4444;
+
+  --color-brand-light: #D7C3FF;
+  --color-brand-medium: #915DFF;
+  --color-brand-dark: #7B42FF;
+  
+  --background-image-purple-gradient: linear-gradient(135deg, #D7C3FF 0%, #915DFF 50%, #7B42FF 100%);
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50 text-slate-900 antialiased overflow-hidden;
+  }
+}
+
+@layer components {
+  .transition-hover {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+

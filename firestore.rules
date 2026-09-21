@@ -1,0 +1,97 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Phase 3: Primitive Definitions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedAdmin() {
+      return isSignedIn() && 
+             request.auth.token.email == "rukhsaarrahi@gmail.com" && 
+             request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Issue Validation
+    function isValidIssue(data) {
+      return data.keys().hasAll(['title', 'description', 'priority', 'status', 'lat', 'lng', 'createdAt']) &&
+             data.keys().size() == 7 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.description is string && data.description.size() <= 2000 &&
+             data.priority in ['high', 'medium', 'low'] &&
+             data.status in ['pending', 'in-progress', 'resolved'] &&
+             data.lat is number && data.lng is number &&
+             data.createdAt is string;
+    }
+
+    // Worker Validation
+    function isValidWorker(data) {
+      return data.keys().hasAll(['name', 'isAvailable']) &&
+             data.keys().size() == 2 &&
+             data.name is string && data.name.size() <= 100 &&
+             data.isAvailable is bool;
+    }
+
+    // Assignment Validation
+    function isValidAssignment(data) {
+      return data.keys().hasAll(['workerId', 'issueId', 'assignedAt']) &&
+             data.keys().size() == 3 &&
+             data.workerId is string && data.issueId is string &&
+             data.assignedAt is string &&
+             exists(/databases/$(database)/documents/workers/$(data.workerId)) &&
+             exists(/databases/$(database)/documents/issues/$(data.issueId));
+    }
+
+    // 1. Issues Collection
+    match /test/connection {
+      allow read: if true;
+    }
+
+    match /issues/{issueId} {
+      allow read: if isSignedIn();
+      allow create: if isVerifiedAdmin() && isValidId(issueId) && isValidIssue(incoming());
+      allow update: if isVerifiedAdmin() && 
+                    isValidIssue(incoming()) && 
+                    incoming().createdAt == existing().createdAt &&
+                    (
+                      incoming().diff(existing()).affectedKeys().hasOnly(['status', 'priority', 'description', 'title', 'lat', 'lng'])
+                    );
+      allow delete: if isVerifiedAdmin();
+    }
+
+    // 2. Workers Collection
+    match /workers/{workerId} {
+      allow read: if isSignedIn();
+      allow create: if isVerifiedAdmin() && isValidId(workerId) && isValidWorker(incoming());
+      allow update: if isVerifiedAdmin() && 
+                    isValidWorker(incoming()) &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['isAvailable', 'name']);
+      allow delete: if isVerifiedAdmin();
+    }
+
+    // 3. Assignments Collection
+    match /assignments/{asgnId} {
+      allow read: if isSignedIn();
+      allow create: if isVerifiedAdmin() && isValidId(asgnId) && isValidAssignment(incoming());
+      allow update: if isVerifiedAdmin() && isValidAssignment(incoming());
+      allow delete: if isVerifiedAdmin();
+    }
+  }
+}

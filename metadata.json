@@ -1,0 +1,8 @@
+{
+  "name": "InfraCare",
+  "description": "Professional infrastructure management dashboard with real-time map visualization and automated workforce management.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}

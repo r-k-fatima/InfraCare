@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "Issue": {
+      "title": "Issue",
+      "description": "Infrastructure issues reported by citizens or sensors.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Short title of the issue" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "priority": { "type": "string", "enum": ["high", "medium", "low"] },
+        "status": { "type": "string", "enum": ["pending", "in-progress", "resolved"] },
+        "lat": { "type": "number", "description": "Latitude" },
+        "lng": { "type": "number", "description": "Longitude" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" }
+      },
+      "required": ["title", "description", "priority", "status", "lat", "lng", "createdAt"]
+    },
+    "Worker": {
+      "title": "Worker",
+      "description": "Field workers available for assignment.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name" },
+        "isAvailable": { "type": "boolean", "description": "Availability status" }
+      },
+      "required": ["name", "isAvailable"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Mapping of workers to specific issues.",
+      "type": "object",
+      "properties": {
+        "workerId": { "type": "string", "description": "ID of the assigned worker" },
+        "issueId": { "type": "string", "description": "ID of the assigned issue" },
+        "assignedAt": { "type": "string", "description": "ISO timestamp of assignment" }
+      },
+      "required": ["workerId", "issueId", "assignedAt"]
+    }
+  },
+  "firestore": {
+    "/issues/{issueId}": {
+      "schema": "Issue",
+      "description": "Collection of all infrastructure issues."
+    },
+    "/workers/{workerId}": {
+      "schema": "Worker",
+      "description": "Collection of available maintenance workers."
+    },
+    "/assignments/{assignmentId}": {
+      "schema": "Assignment",
+      "description": "Active tasks being worked on by workforce."
+    }
+  }
+}
